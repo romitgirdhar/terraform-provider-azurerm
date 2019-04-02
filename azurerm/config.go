@@ -232,8 +232,9 @@ type ArmClient struct {
 	databricksWorkspacesClient databricks.WorkspacesClient
 
 	// HDInsight
-	hdinsightApplicationsClient hdinsight.ApplicationsClient
-	hdinsightClustersClient     hdinsight.ClustersClient
+	hdinsightApplicationsClient   hdinsight.ApplicationsClient
+	hdinsightClustersClient       hdinsight.ClustersClient
+	hdinsightConfigurationsClient hdinsight.ConfigurationsClient
 
 	// KeyVault
 	keyVaultClient           keyvault.VaultsClient
@@ -952,6 +953,10 @@ func (c *ArmClient) registerHDInsightsClients(endpoint, subscriptionId string, a
 	clustersClient := hdinsight.NewClustersClientWithBaseURI(endpoint, subscriptionId)
 	c.configureClient(&clustersClient.Client, auth)
 	c.hdinsightClustersClient = clustersClient
+
+	configurationsClient := hdinsight.NewConfigurationsClientWithBaseURI(endpoint, subscriptionId)
+	c.configureClient(&configurationsClient.Client, auth)
+	c.hdinsightConfigurationsClient = configurationsClient
 }
 
 func (c *ArmClient) registerKeyVaultClients(endpoint, subscriptionId string, auth autorest.Authorizer, keyVaultAuth autorest.Authorizer) {
